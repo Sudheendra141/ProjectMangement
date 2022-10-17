@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <title>Page 1</title>
+      <style>
+      
+         .project-details
+         {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         width: 80vw;
+         }
+         .box
+         {
+         border-radius: 5px;
+         width: 200px;
+         height: 40px;
+         overflow:hidden;
+         }
+         .box select 
+         {
+         padding-left: 1.5rem;
+         display: block;
+         width: 100%;
+         height: 100%;
+         outline: none;
+         border: none;
+         background-color: rgb(108, 118, 125);
+         color: white;
+         appearance: none;
+         }
+         .box select :hover
+         {
+         background-color: rgb(37, 56, 88);
+         cursor: pointer;
+         }
+      </style>
+   </head>
+   <body>
+      <h1>Project Details</h1>
+      <div class="project-details">
+         <div class="box team" >
+            <select >
+               <option class="temp">
+                  Team  
+               </option>
+               <option class="temp">
+                  BMW
+               </option>
+               <option class="temp">
+                  Ferrari
+               </option>
+               <option class="temp">
+                  Merc
+               </option>
+            </select>
+         </div>
+         <div class="status box">
+            <select>
+               <option>Status</option>
+               <option>In Progress</option>
+               <option>Completed</option>
+               <option>Yet to start</option>
+            </select>
+         </div>
+         <div class="from-date box">
+            <select>
+               <option>
+                  From date
+               </option>
+            </select>
+         </div>
+         <div class="to-date box">
+            <select>
+               <option>
+                  
+               </option>
+            </select>
+         </div>
+      </div>
+   </body>
+</html>
