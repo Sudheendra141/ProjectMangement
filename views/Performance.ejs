@@ -1,74 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page 1</title>
-   
-    <style>
-        body
-        {
-            margin-left: 50px;
-        }
-        table
-        {
-            border:1px solid rgb(148, 140, 140);
-           height: 100%;
-            width: 100%;
-            border-collapse: collapse;
-            border-radius: 30px;
-           
-    
-            
-        }
-        th
-        {
-            
-            height: 40px;
-            color: white;
-            background-color: rgb(0, 133, 252);
-            
-            
-        }
-        td
-        {
-            height: 20px;
-            text-align: left;
-            border:1px solid rgb(148, 140, 140);
-            padding: 10px;
-            
-
-        }
-        .content
-        {
-            
-width: 500px;
-  border-radius: 5px 5px 0px 0px;
-  overflow: hidden;
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Page 1</title>
+      <style>
+         body
+         {
+         margin-left: 50px;
+         }
+         table
+         {
+         border:1px solid rgb(148, 140, 140);
+         height: 100%;
+         width: 100%;
+         border-collapse: collapse;
+         border-radius: 30px;
+         }
+         th
+         {
+         height: 40px;
+         color: white;
+         background-color: rgb(0, 133, 252);
+         }
+         td
+         {
+         height: 20px;
+         text-align: left;
+         border:1px solid rgb(148, 140, 140);
+         padding: 10px;
+         }
+         .content
+         {
+         width: 500px;
+         border-radius: 5px 5px 0px 0px;
+         overflow: hidden;
+         }
+         .pagination {
+            margin-top: 20px;
+            margin-left: 350px;
+  display: inline-block;
 }
-        
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>Team Details</h1>
-        <h3>Performance Team</h3>
-    </div>
-    <div class="content">
-        <table>
+
+.pagination a,a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+      </style>
+   </head>
+   <body>
+      <div class="header">
+         <h1>Team Details</h1>
+         <h3>Performance Team</h3>
+      </div>
+      <div class="content">
+         <table>
             <thead></thead>
             <tr>
-                <th>Manager</th>
-                <th>Role</th>
+               <th>Manager</th>
+               <th>Role</th>
             </tr>
             <tbody>
-                <%  for (var emp of data) { 
-                 %>
-                <tr><td><%=emp.name%></td><td><%=emp.role%></td></tr>
-               <%}%>
+               <%
+              console.log("56: "+data.page);
+              let start=data.page;
+              let end = start*recordsPerPage;
+              if(start!=1)
+              start=((start-1)*recordsPerPage)+1;
+               
+                for (let i=start-1;i<data.names.length && i<=end ;i++) { 
+                  %>
+               <tr>
+                  <td><%=data.names[i].name %></td>
+                  <td><%=data.names[i].role %></td>
+               </tr>
+               <%}
+               
+               %>
             </tbody>
-        </table>
-    </div>
-</body>
+         </table>
+      </div>
+      <div class="pagination">
+         <% let pages;
+         if(totalRecords%recordsPerPage==0)
+         {
+            pages=totalRecords/recordsPerPage;
+         }
+         else
+         {
+            pages=(totalRecords/recordsPerPage) +1;
+         }
+         let x=1;
+         while(x<=pages)
+         {
+         %>
+            <a href="http://localhost:3000/TeamDetails/PerformanceTeam/<%=x%>"><%=x%></a>
+            <%
+            x++;
+         }
+         %>
+      </div>
+      <div class="go-back-home">
+         <a href="http://localhost:3000/"> go back home</a>
+      </div>
+   </body>
 </html>

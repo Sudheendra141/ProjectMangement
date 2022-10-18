@@ -7,7 +7,26 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
       <title>Page 1</title>
       <style>
-      
+         .filter-result 
+         {
+         margin-top: 50px; 
+         margin-left: 50px;
+         width: 50vw;
+         }
+         .filter-result table
+         {
+         width: 100%;
+         border: 2px solid black;
+         border-collapse: collapse;
+         }
+         .filter-result table td{
+         text-align: center;
+         border: 1px solid black;
+         }
+         .filter-result table th{
+         text-align: center;
+         border: 1px solid black;
+         }
          .project-details
          {
          display: flex;
@@ -23,7 +42,7 @@
          height: 40px;
          overflow:hidden;
          }
-         .box select 
+         .box select , input[type="date"]
          {
          padding-left: 1.5rem;
          display: block;
@@ -33,7 +52,6 @@
          border: none;
          background-color: rgb(108, 118, 125);
          color: white;
-         appearance: none;
          }
          .box select :hover
          {
@@ -44,45 +62,54 @@
    </head>
    <body>
       <h1>Project Details</h1>
+      <form action="/getProjectDetails">
       <div class="project-details">
-         <div class="box team" >
-            <select >
-               <option class="temp">
-                  Team  
-               </option>
-               <option class="temp">
-                  BMW
-               </option>
-               <option class="temp">
-                  Ferrari
-               </option>
-               <option class="temp">
-                  Merc
-               </option>
-            </select>
-         </div>
-         <div class="status box">
-            <select>
-               <option>Status</option>
-               <option>In Progress</option>
-               <option>Completed</option>
-               <option>Yet to start</option>
-            </select>
-         </div>
-         <div class="from-date box">
-            <select>
-               <option>
-                  From date
-               </option>
-            </select>
-         </div>
-         <div class="to-date box">
-            <select>
-               <option>
-                  
-               </option>
-            </select>
-         </div>
+        
+            <div class="box team" >
+               <select id="teams">
+               </select>
+            </div>
+            <div class="status box">
+               <select id="status">
+                  <option>Status</option>
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                  <option>Yet to start</option>
+               </select>
+            </div>
+            <div class="from-date box">
+           <input type="date" name="startDate" list="starDateList"/>
+           <datalist id="starDateList">
+            <option>jnkf</option>
+           </datalist>
+               
+            </div>
+            <div class="to-date box">
+               <input type="date" placeholder="End Date"/>
+            </div>
+   
       </div>
+   </form>
+      
+         <!-- <div class="filter-result">
+            <table>
+               <thead>
+                  <tr>
+                     <th> Project Name</th>
+                     <th> Team</th>
+                     <th> Start Date</th>
+                     <th>  Status</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div> -->
    </body>
 </html>

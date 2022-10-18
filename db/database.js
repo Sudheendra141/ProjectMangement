@@ -1,4 +1,4 @@
-const { Client } = require('pg')
+const Client=require('pg').Client;
 const client = new Client({
   user: 'intern',
   host: '10.96.45.189',
@@ -11,5 +11,4 @@ client.connect(function(err) {
     console.log("Connected! to database");
   });
   
-
-module.exports=client;
+ module.exports.client=client;
