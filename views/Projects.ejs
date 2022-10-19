@@ -9,7 +9,7 @@
       <style>
          .filter-result 
          {
-         margin-top: 50px; 
+         margin-top: 100px; 
          margin-left: 50px;
          width: 50vw;
          }
@@ -47,7 +47,6 @@
          border-radius: 5px;
          width: 200px;
          height: 40px;
-         overflow:hidden;
          }
          .box select 
          {
@@ -60,14 +59,27 @@
          background-color: rgb(108, 118, 125);
          color: white;
          }
-         input[type="date"],input[type="submit"]
+         input[type="date"],input[type="submit"],label
          {
          display: block;
          height: 100%;
+         border-radius: 5px;
          outline: none;
          border: none;
          background-color: rgb(108, 118, 125);
          color: white;
+         text-align: center;
+         }
+         label
+         {
+         display: flex;
+         flex-direction: row;
+         justify-content: center;
+         align-items: center;
+         }
+         input[type="date"]
+         {
+         margin-top: 10px;
          }
          input[type="date"]:hover,input[type="submit"]:hover
          {
@@ -86,23 +98,26 @@
          <div class="project-details">
             <div class="box team" >
                <select id="teams" name="team">
-                
+                  <option value="Team">Team</option>
                   <% for(let i=0;i<data.teams.length;i++) {%>
-                     <option value="<%=data.teams[i].team %>"> <%= data.teams[i].team %></option>
-                 <%}%>
+                  <option value="<%=data.teams[i].team %>"> <%= data.teams[i].team %></option>
+                  <%}%>
                </select>
             </div>
             <div class="status box">
                <select id="status"  name="status">
+                  <option value="Status">Status</option>
                   <option value="In Progress">In Progress</option>
                   <option value="Completed">Completed</option>
                   <option value="Yet to start">Yet to start</option>
                </select>
             </div>
             <div class="from-date box">
+               <label>Start Date</label>
                <input type="date" name="startDate" />
             </div>
             <div class="to-date box">
+               <label>End Date</label>
                <input type="date" name="endDate" placeholder="End Date"/>
             </div>
             <div class="box">
@@ -110,8 +125,8 @@
             </div>
          </div>
       </form>
-      <div class="filter-result" style="display: <%=data.result?'block':'none' %>;">
-         <table>   
+      <div class="filter-result" style="display: <%=data.result && data.projectDetails.length>0 ?'block':'none' %>;">
+         <table>
             <thead>
                <tr>
                   <th> Project Name</th>
@@ -121,21 +136,25 @@
                </tr>
             </thead>
             <tbody>
-               
-            <% 
-            if(data.result)
-            {
-            for(let i=0;i<data.projectDetails.length;i++){ %>
+               <% 
+                  if(data.result)
+                  {
+                  for(let i=0;i<data.projectDetails.length;i++){
+                     console.log(typeof data.projectDetails[i].start_date);
+                     %>
                <tr>
                   <td><%=data.projectDetails[i].project_name%></td>
                   <td><%=data.projectDetails[i].team %></td>
-                  <td><%=data.projectDetails[i].start_date %></td>
+                  <td><%= ""+data.projectDetails[i].start_date %></td>
                   <td><%=data.projectDetails[i].status %></td>
                </tr>
                <% }
-             } %>
+                  } %>
             </tbody>
          </table>
       </div>
+      <% if(data.result && data.projectDetails.length==0) { %>
+      <h3>No record as found</h3>
+      <%}%>
    </body>
 </html>

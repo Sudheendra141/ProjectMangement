@@ -38,18 +38,16 @@
          overflow: hidden;
          }
          .pagination {
-            margin-top: 20px;
-            margin-left: 350px;
-  display: inline-block;
-}
-
-.pagination a,a {
-  color: black;
-  float: left;
-  padding: 8px 16px;
-  text-decoration: none;
-}
-
+         margin-top: 20px;
+         margin-left: 350px;
+         display: inline-block;
+         }
+         .pagination a,a {
+         color: black;
+         float: left;
+         padding: 8px 16px;
+         text-decoration: none;
+         }
       </style>
    </head>
    <body>
@@ -66,46 +64,45 @@
             </tr>
             <tbody>
                <%
-              console.log("56: "+data.page);
-              let start=data.page;
-              let end = start*recordsPerPage;
-              if(start!=1)
-              start=((start-1)*recordsPerPage)+1;
-               
-                for (let i=start-1;i<data.names.length && i<=end ;i++) { 
-                  %>
+                  console.log("56: "+data.page);
+                  let start=data.page;
+                  let end = start*recordsPerPage;
+                  if(start!=1)
+                  start=((start-1)*recordsPerPage)+1;
+                   
+                    for (let i=start-1;i<data.names.length && i<=end ;i++) { 
+                      %>
                <tr>
                   <td><%=data.names[i].name %></td>
                   <td><%=data.names[i].role %></td>
                </tr>
                <%}
-               
-               %>
+                  %>
             </tbody>
          </table>
       </div>
       <div class="pagination">
          <% let pages;
-         if(totalRecords%recordsPerPage==0)
-         {
-            pages=totalRecords/recordsPerPage;
-         }
-         else
-         {
-            pages=(totalRecords/recordsPerPage) +1;
-         }
-         let x=1;
-         while(x<=pages)
-         {
-         %>
-            <a href="http://localhost:3000/TeamDetails/DBPerformanceTeam/<%=x%>"><%=x%></a>
-            <%
+            if(totalRecords%recordsPerPage==0)
+            {
+               pages=totalRecords/recordsPerPage;
+            }
+            else
+            {
+               pages=(totalRecords/recordsPerPage) +1;
+            }
+            let x=1;
+            while(x<=pages)
+            {
+            %>
+         <a href="http://localhost:3000/TeamDetails/DBPerformanceTeam/<%=x%>"><%=x%></a>
+         <%
             x++;
-         }
-         %>
+            }
+            %>
       </div>
       <div class="go-back-home">
-         <a href="http://localhost:3000/"> go back home</a>
+         <a href="http://localhost:3000/">Home</a>
       </div>
    </body>
 </html>

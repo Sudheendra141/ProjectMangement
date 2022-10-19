@@ -9,7 +9,6 @@ let getProjectDetailsByStatus='select * from projects where status =';
 let getProjectDetailsByStartDate='select * from projects where start_date = '
 let getProjectDetailsByEndDate='select * from projects where end_date ='
 
-
 module.exports={
     getEmployeeNamesPerformnce,
     getEmployeeNamesDatabase,
@@ -22,3 +21,4 @@ module.exports={
     getProjectDetailsByEndDate
 
 };
+

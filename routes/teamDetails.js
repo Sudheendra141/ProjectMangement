@@ -2,7 +2,6 @@ let express=require('express');
 let router=express.Router();
 let client=require('../db/database').client;
 let queries=require('../db/queries');
-let url = require('url');
 let performanceTeamList,dbPerformanceTeamList;
 
 router.get('/PerformanceTeam',async(req,res)=>
@@ -17,11 +16,9 @@ router.get('/PerformanceTeam',async(req,res)=>
    {
     console.log(err);
    }
- 
-
-           
-  res.render('Performance',data={names:performanceTeamList.rows,page:1,recordsPerPage,totalRecords});
+ res.render('Performance',data={names:performanceTeamList.rows,page:1,recordsPerPage:recordsPerPage,totalRecords:totalRecords});
 });
+
 router.get('/PerformanceTeam/:p',async(req,res)=>
 {
     let totalRecords,recordsPerPage=5;
@@ -42,7 +39,6 @@ console.log(performanceTeamList.rows[0])
 res.render('Performance',data={names:performanceTeamList.rows,page,recordsPerPage,totalRecords});
 });
 
-
 router.get('/DBPerformanceTeam',async(req,res)=>
 {
     let totalRecords,recordsPerPage=5;
@@ -55,11 +51,9 @@ router.get('/DBPerformanceTeam',async(req,res)=>
    {
     console.log(err);
    }
- 
-
-           
   res.render('DBPerformance',data={names:dbPerformanceTeamList.rows,page:1,recordsPerPage,totalRecords});
 });
+
 router.get('/DBPerformanceTeam/:p',async(req,res)=>
 {
     let totalRecords,recordsPerPage=5;
