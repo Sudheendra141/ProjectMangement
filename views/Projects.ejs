@@ -13,19 +13,26 @@
          margin-left: 50px;
          width: 50vw;
          }
-         .filter-result table
+         table
          {
+         border:1px solid rgb(148, 140, 140);
+         height: 100%;
          width: 100%;
-         border: 2px solid black;
          border-collapse: collapse;
+         border-radius: 30px;
          }
-         .filter-result table td{
-         text-align: center;
-         border: 1px solid black;
+         th
+         {
+         height: 40px;
+         color: white;
+         background-color: rgb(0, 133, 252);
          }
-         .filter-result table th{
-         text-align: center;
-         border: 1px solid black;
+         td
+         {
+         height: 20px;
+         text-align: left;
+         border:1px solid rgb(148, 140, 140);
+         padding: 10px;
          }
          .project-details
          {
@@ -42,7 +49,7 @@
          height: 40px;
          overflow:hidden;
          }
-         .box select , input[type="date"]
+         .box select 
          {
          padding-left: 1.5rem;
          display: block;
@@ -53,7 +60,20 @@
          background-color: rgb(108, 118, 125);
          color: white;
          }
-         .box select :hover
+         input[type="date"],input[type="submit"]
+         {
+         display: block;
+         height: 100%;
+         outline: none;
+         border: none;
+         background-color: rgb(108, 118, 125);
+         color: white;
+         }
+         input[type="date"]:hover,input[type="submit"]:hover
+         {
+         background-color:rgb(37, 56, 88);
+         }
+         .box  :hover
          {
          background-color: rgb(37, 56, 88);
          cursor: pointer;
@@ -62,54 +82,60 @@
    </head>
    <body>
       <h1>Project Details</h1>
-      <form action="/getProjectDetails">
-      <div class="project-details">
-        
+      <form action="/ProjectDetails" method="post">
+         <div class="project-details">
             <div class="box team" >
-               <select id="teams">
+               <select id="teams" name="team">
+                
+                  <% for(let i=0;i<data.teams.length;i++) {%>
+                     <option value="<%=data.teams[i].team %>"> <%= data.teams[i].team %></option>
+                 <%}%>
                </select>
             </div>
             <div class="status box">
-               <select id="status">
-                  <option>Status</option>
-                  <option>In Progress</option>
-                  <option>Completed</option>
-                  <option>Yet to start</option>
+               <select id="status"  name="status">
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Yet to start">Yet to start</option>
                </select>
             </div>
             <div class="from-date box">
-           <input type="date" name="startDate" list="starDateList"/>
-           <datalist id="starDateList">
-            <option>jnkf</option>
-           </datalist>
-               
+               <input type="date" name="startDate" />
             </div>
             <div class="to-date box">
-               <input type="date" placeholder="End Date"/>
+               <input type="date" name="endDate" placeholder="End Date"/>
             </div>
-   
+            <div class="box">
+               <input type="submit" value="Fetch"/>
+            </div>
+         </div>
+      </form>
+      <div class="filter-result" style="display: <%=data.result?'block':'none' %>;">
+         <table>   
+            <thead>
+               <tr>
+                  <th> Project Name</th>
+                  <th> Team</th>
+                  <th> Start Date</th>
+                  <th>  Status</th>
+               </tr>
+            </thead>
+            <tbody>
+               
+            <% 
+            if(data.result)
+            {
+            for(let i=0;i<data.projectDetails.length;i++){ %>
+               <tr>
+                  <td><%=data.projectDetails[i].project_name%></td>
+                  <td><%=data.projectDetails[i].team %></td>
+                  <td><%=data.projectDetails[i].start_date %></td>
+                  <td><%=data.projectDetails[i].status %></td>
+               </tr>
+               <% }
+             } %>
+            </tbody>
+         </table>
       </div>
-   </form>
-      
-         <!-- <div class="filter-result">
-            <table>
-               <thead>
-                  <tr>
-                     <th> Project Name</th>
-                     <th> Team</th>
-                     <th> Start Date</th>
-                     <th>  Status</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                     <td></td>
-                  </tr>
-               </tbody>
-            </table>
-         </div> -->
    </body>
 </html>
