@@ -33,9 +33,7 @@ router.get('/PerformanceTeam/:p',async(req,res)=>
    {
     console.log(err);
    }
- 
-console.log(performanceTeamList.rows[0])
-           
+  
 res.render('Performance',data={names:performanceTeamList.rows,page,recordsPerPage,totalRecords});
 });
 
@@ -62,22 +60,15 @@ router.get('/DBPerformanceTeam/:p',async(req,res)=>
     {
         performanceTeamList=await client.query(queries.getEmployeeNamesDatabase);
         totalRecords=dbPerformanceTeamList.rows.length;
-
     }
    catch(err)
    {
     console.log(err);
    }
- 
-console.log(dbPerformanceTeamList.rows[0])
-           
+            
 res.render('DBPerformance',data={names:dbPerformanceTeamList.rows,page,recordsPerPage,totalRecords});
 });
 
-
-
-
- 
 
 module.exports=router;
 

@@ -90,6 +90,13 @@
          background-color: rgb(37, 56, 88);
          cursor: pointer;
          }
+         .go-back-home a
+         {
+         color: black;
+         float: left;
+         padding: 8px 16px;
+         text-decoration: none;
+         }
       </style>
    </head>
    <body>
@@ -98,27 +105,26 @@
          <div class="project-details">
             <div class="box team" >
                <select id="teams" name="team">
-                  <option value="Team">Team</option>
+              
                   <% for(let i=0;i<data.teams.length;i++) {%>
-                  <option value="<%=data.teams[i].team %>"> <%= data.teams[i].team %></option>
-                  <%}%>
+                     <option value="<%=data.teams[i].team %>"> <%= data.teams[i].team %></option>
+                     <%}%>
                </select>
             </div>
             <div class="status box">
                <select id="status"  name="status">
-                  <option value="Status">Status</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Yet to start">Yet to start</option>
+                  <% for(let i=0;i<data.teamStatus.length;i++) {%>
+                  <option value="<%=data.teamStatus[i] %>"> <%= data.teamStatus[i] %></option>
+                  <%}%>
                </select>
             </div>
             <div class="from-date box">
-               <label>Start Date</label>
-               <input type="date" name="startDate" />
+               <label>Start Date &#8595;</label>
+               <input type="date" name="startDate"  value="<%= data.startDate %>" />
             </div>
             <div class="to-date box">
-               <label>End Date</label>
-               <input type="date" name="endDate" placeholder="End Date"/>
+               <label>End Date &#8595;</label>
+               <input type="date" name="endDate"  value="<%= data.endDate %>"/>
             </div>
             <div class="box">
                <input type="submit" value="Fetch"/>
@@ -131,7 +137,7 @@
                <tr>
                   <th> Project Name</th>
                   <th> Team</th>
-                  <th> Start Date</th>
+                  <th> Start Date </th>
                   <th>  Status</th>
                </tr>
             </thead>
@@ -140,12 +146,11 @@
                   if(data.result)
                   {
                   for(let i=0;i<data.projectDetails.length;i++){
-                     console.log(typeof data.projectDetails[i].start_date);
                      %>
                <tr>
                   <td><%=data.projectDetails[i].project_name%></td>
                   <td><%=data.projectDetails[i].team %></td>
-                  <td><%= ""+data.projectDetails[i].start_date %></td>
+                  <td><%=JSON.stringify(data.projectDetails[i].startdate).substring(1,11)%></td>
                   <td><%=data.projectDetails[i].status %></td>
                </tr>
                <% }
@@ -154,7 +159,10 @@
          </table>
       </div>
       <% if(data.result && data.projectDetails.length==0) { %>
-      <h3>No record as found</h3>
+      <h2  style="color: red; margin-top: 100px; margin-left: 100px;">No record as found 🙄</h2>
       <%}%>
    </body>
+   <div class="go-back-home" style="display: <%=data.result?'block':'none' %>; ">
+      <a href="http://localhost:3000/">	&#8592;Home</a>
+   </div>
 </html>

@@ -38,8 +38,6 @@
          overflow: hidden;
          }
          .pagination {
-         margin-top: 20px;
-         margin-left: 350px;
          display: inline-block;
          }
          .pagination a,a {
@@ -48,14 +46,33 @@
          padding: 8px 16px;
          text-decoration: none;
          }
+         .page-not-found h1,.page-not-found a
+         {
+         color: red;
+         }
+         .footer
+         {
+         width: 500px;
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         }
       </style>
    </head>
    <body>
-      <div class="header">
+      <%
+         let display=1;
+         let totalPages=Math.ceil(data.totalRecords/data.recordsPerPage);
+         if(data.page>totalPages || data.page<=0)
+         {
+            display=0;
+         }
+         %>
+      <div class="header" style="display:<%=display==1?'block':'none';%>">
          <h1>Team Details</h1>
          <h3>Performance Team</h3>
       </div>
-      <div class="content">
+      <div class="content" style="display:<%=display==1?'block':'none';%>">
          <table>
             <thead></thead>
             <tr>
@@ -65,10 +82,9 @@
             <tbody>
                <%
                   let start=data.page;
-                  let end = start*recordsPerPage;
+                  let end = start*data.recordsPerPage;
                   if(start!=1)
-                  start=((start-1)*recordsPerPage)+1;
-                   
+                  start=((start-1)*data.recordsPerPage)+1;
                     for (let i=start-1;i<data.names.length && i<=end ;i++) { 
                       %>
                <tr>
@@ -80,7 +96,7 @@
             </tbody>
          </table>
       </div>
-      <div class="pagination">
+      <!-- <div class="pagination">
          <% let pages;
             if(totalRecords%recordsPerPage==0)
             {
@@ -99,9 +115,20 @@
             x++;
             }
             %>
-      </div>
-      <div class="go-back-home">
-         <a href="http://localhost:3000/">Home</a>
+         </div> -->
+      <div class="footer">
+         <div class="go-back-home" style="display:<%=display==1?'block':'none';%>">
+            <a href="http://localhost:3000/">	&#8592; Home</a>
+         </div>
+         <div class="pagination" style="display:<%=display==1?'block':'none';%>">
+            <a href="http://localhost:3000/TeamDetails/PerformanceTeam/<%=data.page<=1?1:parseInt(data.page)-1%>">&#8592;</a>
+            <a href="http://localhost:3000/TeamDetails/PerformanceTeam/<%=data.page%>"><%=data.page%>/<%=totalPages%></a>
+            <a href="http://localhost:3000/TeamDetails/PerformanceTeam/<%=data.page>=totalPages?totalPages:parseInt(data.page)+1%>">&#8594;</a>
+         </div>
+         <div class="page-not-found" style="display:<%=display==1?'none':'block';%>">
+            <h1>Page Not Found </h1>
+            <a href="http://localhost:3000/">Home</a>
+         </div>
       </div>
    </body>
 </html>
