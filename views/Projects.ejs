@@ -59,7 +59,7 @@
          background-color: rgb(108, 118, 125);
          color: white;
          }
-         input[type="date"],input[type="submit"],label
+         input[type="date"],input[type="submit"]
          {
          display: block;
          height: 100%;
@@ -70,13 +70,7 @@
          color: white;
          text-align: center;
          }
-         label
-         {
-         display: flex;
-         flex-direction: row;
-         justify-content: center;
-         align-items: center;
-         }
+      
          input[type="date"]
          {
          margin-top: 10px;
@@ -90,6 +84,10 @@
          background-color: rgb(37, 56, 88);
          cursor: pointer;
          }
+         label :hover
+         {
+            background-color:transparent;
+         }
          .go-back-home a
          {
          color: black;
@@ -97,33 +95,76 @@
          padding: 8px 16px;
          text-decoration: none;
          }
+         .from-date,.to-date
+         {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content:space-around;
+         }
+         .pagination {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+      
+        
+         }
+         .pagination a,a {
+         color: black;
+         float: left;
+         padding: 8px 16px;
+         text-decoration: none;
+         }
+         .page-not-found h1,.page-not-found a
+         {
+         color: red;
+         }
+         .footer
+         {
+            margin-top: 20px;
+            margin-left: 20px;
+         width: 55%;
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         }
       </style>
    </head>
    <body>
+      <%
+      let display=1;
+      let totalPages=Math.ceil(data.totalRecords/data.recordsPerPage);
+      if(data.page>totalPages || data.page<=0)
+      {
+         display=0;
+      }
+      let projectDetails=data.req.session.projectDetails;
+      %>
+
       <h1>Project Details</h1>
       <form action="/ProjectDetails" method="post">
          <div class="project-details">
             <div class="box team" >
                <select id="teams" name="team">
               
-                  <% for(let i=0;i<data.teams.length;i++) {%>
-                     <option value="<%=data.teams[i].team %>"> <%= data.teams[i].team %></option>
+                  <% for(let i=0;i<projectDetails.teams.length;i++) {%>
+                     <option value="<%=projectDetails.teams[i].team %>"> <%= projectDetails.teams[i].team %></option>
                      <%}%>
                </select>
             </div>
             <div class="status box">
                <select id="status"  name="status">
-                  <% for(let i=0;i<data.teamStatus.length;i++) {%>
-                  <option value="<%=data.teamStatus[i] %>"> <%= data.teamStatus[i] %></option>
+                  <% for(let i=0;i<projectDetails.teamStatus.length;i++) {%>
+                  <option value="<%=projectDetails.teamStatus[i] %>"> <%= projectDetails.teamStatus[i] %></option>
                   <%}%>
                </select>
             </div>
             <div class="from-date box">
-               <label>Start Date &#8595;</label>
+               <label>Start Date </label>
                <input type="date" name="startDate"  value="<%= data.startDate %>" />
             </div>
             <div class="to-date box">
-               <label>End Date &#8595;</label>
+               <label>End Date </label>
                <input type="date" name="endDate"  value="<%= data.endDate %>"/>
             </div>
             <div class="box">
@@ -131,7 +172,7 @@
             </div>
          </div>
       </form>
-      <div class="filter-result" style="display: <%=data.result && data.projectDetails.length>0 ?'block':'none' %>;">
+      <div class="filter-result" style="display: <%=data.result && projectDetails.projects.length>0 ?'block':'none' %>;">
          <table>
             <thead>
                <tr>
@@ -143,26 +184,43 @@
             </thead>
             <tbody>
                <% 
+
+               let start=data.page;
+               let end = start*data.recordsPerPage;
+               if(start!=1)
+               start=((start-1)*data.recordsPerPage)+1;
+      
                   if(data.result)
                   {
-                  for(let i=0;i<data.projectDetails.length;i++){
+                    for (let i=start-1;i<projectDetails.projects.length && i<=end-1 ;i++) { 
                      %>
                <tr>
-                  <td><%=data.projectDetails[i].project_name%></td>
-                  <td><%=data.projectDetails[i].team %></td>
-                  <td><%=JSON.stringify(data.projectDetails[i].startdate).substring(1,11)%></td>
-                  <td><%=data.projectDetails[i].status %></td>
+                  <td><%=projectDetails.projects[i].project_name%></td>
+                  <td><%=projectDetails.projects[i].team %></td>
+                  <td><%=JSON.stringify(projectDetails.projects[i].startdate).substring(1,11)%></td>
+                  <td><%=projectDetails.projects[i].status %></td>
                </tr>
                <% }
                   } %>
             </tbody>
          </table>
       </div>
-      <% if(data.result && data.projectDetails.length==0) { %>
+      <div class="footer">
+
+         <div class="go-back-home" style="display: <%=data.result?'block':'none' %>; ">
+            <a href="http://localhost:3000/home">	&#8592;Home</a>
+         </div>
+         <div class="pagination" style="display:<%=display==1?'block':'none';%>">
+            <a href="http://localhost:3000/ProjectDetails/<%=data.page<=1?1:parseInt(data.page)-1%>">&#8592;</a>
+            <a href="http://localhost:3000/ProjectDetails/<%=data.page%>"><%=data.page%>/<%=totalPages%></a>
+            <a href="http://localhost:3000/ProjectDetails/<%=data.page>=totalPages?totalPages:parseInt(data.page)+1%>">&#8594;</a>
+         </div>
+         
+         
+      </div>
+      <% if(data.result && projectDetails.projects.length==0) { %>
       <h2  style="color: red; margin-top: 100px; margin-left: 100px;">No record as found 🙄</h2>
       <%}%>
    </body>
-   <div class="go-back-home" style="display: <%=data.result?'block':'none' %>; ">
-      <a href="http://localhost:3000/">	&#8592;Home</a>
-   </div>
+   
 </html>

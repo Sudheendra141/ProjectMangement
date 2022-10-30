@@ -57,7 +57,7 @@ function FillTeamStatus() {
 }
 function genrateQuery(team, status, startDate, endDate) {
 	let arr = [];
-	arr[0] = team == "Teams" ? 0 : 1;
+	arr[0] = team == "Teams" ? 0 : 1; 
 	arr[1] = status == "Status" ? 0 : 1;
 	arr[2] = startDate == "" ? 0 : 1;
 	arr[3] = endDate == "" ? 0 : 1;
@@ -70,6 +70,7 @@ function genrateQuery(team, status, startDate, endDate) {
 			query += ` team = '${team}' `;
 			firstConditonThere = true;
 		}
+	
 
 		if (arr[1] == 1) {
 			if (firstConditonThere)
