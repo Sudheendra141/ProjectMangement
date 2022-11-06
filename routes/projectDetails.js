@@ -18,9 +18,6 @@ router.get('/', async (req, res) => {
   req.session.projectDetails.endDate="";
   req.session.projectDetails.teams=teams;
   req.session.projectDetails.teamStatus=teamStatus;
-
- 
-
 	res.render('Projects', data={req,page:1,recordsPerPage:5,totalRecords:0,result:false});});
 
 

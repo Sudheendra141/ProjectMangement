@@ -63,7 +63,6 @@
          span
          {
             display: inline-block;
-            
          }
          .edit
          {
@@ -105,12 +104,14 @@
    </head>
    <body>
       <%
+         let pageDetails=data.req.session.pageDetails;
          let display=1;
-         let totalPages=Math.ceil(data.totalRecords/data.recordsPerPage);
-         if(data.page>totalPages || data.page<=0)
+         let totalPages=Math.ceil(pageDetails.totalRecords/pageDetails.recordsPerPage);
+         if(pageDetails.pageNumber>totalPages || pageDetails.pageNumber<=0)
          {
             display=0;
          }
+         console.log("115: "+totalPages);
          %>
       <div class="header" style="display:<%=display==1?'block':'none';%>">
          <h1>Team Details</h1>
@@ -125,10 +126,11 @@
             </tr>
             <tbody>
                <%
-                  let start=data.page;
-                  let end = start*data.recordsPerPage;
+                  let start=pageDetails.pageNumber;
+                  let end = start*pageDetails.recordsPerPage;
                   if(start!=1)
-                  start=((start-1)*data.recordsPerPage)+1;
+                  start=((start-1)*pageDetails.recordsPerPage)  +1;
+         
                     for (let i=start-1;i<data.req.session.dbPerformanceTeamList.length && i<=end-1 ;i++) { 
                       %>
                <tr>
@@ -145,9 +147,9 @@
             <a href="http://localhost:3000/home">	&#8592; Home</a>
          </div>
          <div class="pagination" style="display:<%=display==1?'block':'none';%>">
-            <a href="http://localhost:3000/TeamDetails/DBPerformanceTeam/<%=data.page<=1?1:parseInt(data.page)-1%>">&#8592;</a>
-            <a href="http://localhost:3000/TeamDetails/DBPerformanceTeam/<%=data.page%>"><%=data.page%>/<%=totalPages%></a>
-            <a href="http://localhost:3000/TeamDetails/DBPerformanceTeam/<%=data.page>=totalPages?totalPages:parseInt(data.page)+1%>">&#8594;</a>
+            <a href="http://localhost:3000/TeamDetails/DbPerformanceTeam/<%=pageDetails.pageNumber<=1?1:parseInt(pageDetails.pageNumber)-1%>">&#8592;</a>
+            <a href="http://localhost:3000/TeamDetails/DbPerformanceTeam/<%=pageDetails.pageNumber%>"><%=pageDetails.pageNumber%>/<%=totalPages%></a>
+            <a href="http://localhost:3000/TeamDetails/DbPerformanceTeam/<%=pageDetails.pageNumber>=totalPages?totalPages:parseInt(pageDetails.pageNumber)+1%>">&#8594;</a>
          </div>
          <div class="page-not-found" style="display:<%=display==1?'none':'block';%>">
             <h1>Page Not Found </h1>
@@ -156,7 +158,7 @@
         
       </div>
       <div class="addEmployee">
-         <a href="http://localhost:3000/TeamDetails/DBPerformanceTeam/NewMember"><span class="material-icons" >person_add</span><span>Add Member</span> </a>
+         <a href="http://localhost:3000/TeamDetails/DbPerformanceTeam/NewMember"><span class="material-icons" >person_add</span><span>Add Member</span> </a>
       </div>
    </body>
 </html>

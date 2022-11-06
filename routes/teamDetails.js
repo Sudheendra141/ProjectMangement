@@ -15,12 +15,16 @@ router.get('/PerformanceTeam',async(req,res)=>
         performanceTeamList=await client.query(queries.getEmployeeNamesPerformnce);
         totalRecords=performanceTeamList.rows.length;
         req.session.performanceTeamList=performanceTeamList.rows;
+        req.session.pageDetails={};
+        req.session.pageDetails.pageNumber=1;
+        req.session.pageDetails.recordsPerPage=5;
+        req.session.pageDetails.totalRecords=totalRecords;
     }
    catch(err)
    {
     console.log(err);
    }
- res.render('Performance',data={req,page:1,recordsPerPage:recordsPerPage,totalRecords:totalRecords});
+ res.render('Performance',data={req});
 });
 router.get('/PerformanceTeam/NewMember',async(req,res)=>
 {
@@ -28,6 +32,20 @@ router.get('/PerformanceTeam/NewMember',async(req,res)=>
     res.redirect('/admin-login')
 
    res.render("NewMember")
+});
+router.post('/PerformanceTeam/NewMember/',async(req,res)=>
+{
+    console.log("34");
+    if(!req.session.isLogedIn)
+        res.redirect('/admin-login')
+    let emp_id=parseInt(req.body.id);
+    let userName=req.body.userName;
+    let firstName=req.body.firstName;
+    let lastName=req.body.lastName;
+    let role=req.body.role;
+    let team=req.body.team;
+    res.render('Performance',data={req});
+
 });
 router.get('/DBPerformanceTeam/NewMember',async(req,res)=>
 {
@@ -60,53 +78,32 @@ router.get('/DBPerformanceTeam',async(req,res)=>
         let dbPerformanceTeamList=await client.query(queries.getEmployeeNamesDatabase);
         totalRecords=dbPerformanceTeamList.rows.length;
         req.session.dbPerformanceTeamList=dbPerformanceTeamList.rows;
+        req.session.pageDetails={};
+        req.session.pageDetails.pageNumber=1;
+        req.session.pageDetails.recordsPerPage=5;
+        req.session.pageDetails.totalRecords=totalRecords;
+        
         
     }
    catch(err)
    {
     console.log(err);
    }
-  res.render('DBPerformance',data={req,page:1,recordsPerPage,totalRecords});
+  res.render('DBPerformance',data={req});
 });
 
 router.get('/PerformanceTeam/:p',async(req,res)=>
 {
-    
-    let totalRecords,recordsPerPage=5;
-    let page=req.params.p;
-    try
-    {
-        performanceTeamList=await client.query(queries.getEmployeeNamesPerformnce);
-        totalRecords=performanceTeamList.rows.length;
-        req.session.performanceTeamList=performanceTeamList.rows;
+   req.session.pageDetails.pageNumber=req.params.p;
 
-    }
-   catch(err)
-   {
-    console.log(err);
-   }
-  
-res.render('Performance',data={req,page,recordsPerPage,totalRecords});
+res.render('Performance',data={req});
 });
 
 
 router.get('/DBPerformanceTeam/:p',async(req,res)=>
 {
-    let totalRecords,recordsPerPage=5;
-    let page=req.params.p;
-    try
-    {
-        let dbPerformanceTeamList=await client.query(queries.getEmployeeNamesDatabase);
-        totalRecords=dbPerformanceTeamList.rows.length;
-        req.session.dbPerformanceTeamList=dbPerformanceTeamList.rows;
-
-    }
-   catch(err)
-   {
-    console.log(err);
-   }
-            
-res.render('DBPerformance',data={req,page,recordsPerPage,totalRecords});
+    req.session.pageDetails.pageNumber=req.params.p;
+    res.render('DBPerformance',data={req});
 });
 
 
